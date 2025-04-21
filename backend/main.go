@@ -70,7 +70,7 @@ func main() {
 	// Middleware to check JWT token
 	protected.Use(JWTAuthMiddleware())
 
-	// Middleware to add redis client in to routegroup
+	// Middleware to add redis client in to route group
 	protected.Use(func(c *gin.Context) {
 		c.Set("redisClient", rdb)
 		c.Next()
