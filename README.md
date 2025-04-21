@@ -65,3 +65,11 @@ This will return a list of all the cached in the system.
     -H "Authorization: Bearer $JWT_TOKEN" 
 ``` 
 This will return a list of all the dates where there are flights available in the system. 
+
+### Get all flights available for a date
+```bash
+    curl "http://localhost/api/flights/2025-04-28" \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer $JWT_TOKEN" 
+``` 
+This will return a list ordered from departure date from closest to farthest of all the flights available for the date specified in the URL.

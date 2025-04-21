@@ -83,6 +83,9 @@ func main() {
 	// Route to fetch all the dates where flights are available
 	protected.GET("/dates", handlers.GetDates)
 
+	// Route to fetch all flights from a date
+	protected.GET("/flights/:date", handlers.GetFlightsFromDate)
+
 	err := r.Run(":8080")
 	if err != nil {
 		log.Fatalf("Error starting server: %v", err)
