@@ -11,12 +11,17 @@ import (
 	"time"
 )
 
+// callMockyAPI fetches data from the Mocky API and saves it to Redis.
+// It uses a context to manage the request lifecycle and a Redis client to store the data.
+// If the request takes too long, it will be canceled.
 func callMockyAPI(ctx context.Context, rdb *redis.Client) error {
 	// Mocky API URL: This shouldn't be hardcoded in production code
 	url := "https://run.mocky.io/v3/60991ebd-1a38-4b8c-9e29-6466adb66fc6"
 
 	// Create a new HTTP client
 	client := &http.Client{}
+
+	log.Println("Calling Mocky API...")
 
 	// Create a new GET request
 	req, err := http.NewRequest("GET", url, nil)
@@ -37,8 +42,19 @@ func callMockyAPI(ctx context.Context, rdb *redis.Client) error {
 	// Read response body
 	decoder := json.NewDecoder(resp.Body)
 
-	_, err = decoder.Token()
+	// Parse and insert data into the database
+	return parseAndInsert(ctx, rdb, decoder)
+}
 
+// We created a separate function with its own context to ensure that the parsing and insertion
+// if the parent context (The request) dies but the parsing is still in progress, it will not be interrupted.
+func parseAndInsert(ctx context.Context, rdb *redis.Client, decoder *json.Decoder) error {
+	log.Println("Parsing and saving flights from MockyAPI into Redis...")
+	// Create a cancellable context to ensure parsing and insertion complete
+	parseCtx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	_, err := decoder.Token()
 	if err != nil {
 		log.Fatal("Failed to read start object %v", err)
 	}
@@ -63,9 +79,9 @@ func callMockyAPI(ctx context.Context, rdb *redis.Client) error {
 					log.Printf("Decode error: %v", err)
 					continue
 				}
-				// Save flight to Redis
-				err := saveFlightByDate(ctx, rdb, flight)
 
+				// Save flight to Redis
+				err := saveFlightByDate(parseCtx, rdb, flight)
 				if err != nil {
 					log.Printf("Error saving flight: %v", err)
 					continue
