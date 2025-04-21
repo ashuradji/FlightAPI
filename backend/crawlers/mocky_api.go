@@ -99,6 +99,7 @@ func parseAndInsert(ctx context.Context, rdb *redis.Client, decoder *json.Decode
 	return nil
 }
 
+// saveFlightByDate saves a flight to Redis by its departure date. The sooner the flight, the more recent it is.
 func saveFlightByDate(ctx context.Context, rdb *redis.Client, flight models.Flight) error {
 	// Parse and format the date
 	t, err := time.Parse(time.RFC3339, flight.DepartureTime)
