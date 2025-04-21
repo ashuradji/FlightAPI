@@ -1,4 +1,4 @@
-FROM golang:1.24 as builder
+FROM golang:1.24 AS builder
 
 WORKDIR /app
 
@@ -12,6 +12,6 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o app .
 
 FROM scratch
 
-COPY --from=builder /app/main /app/main
+COPY --from=builder app/app .
 
-ENTRYPOINT ["/app/main"]
+ENTRYPOINT ["./app"]
