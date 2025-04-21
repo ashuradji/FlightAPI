@@ -73,3 +73,12 @@ This will return a list of all the dates where there are flights available in th
     -H "Authorization: Bearer $JWT_TOKEN" 
 ``` 
 This will return a list ordered from departure date from closest to farthest of all the flights available for the date specified in the URL.
+
+### Search flights by origin, destination and date
+```bash
+    curl "http://localhost/api/flights/search?origin=JNB&destination=ATL&date=2025-04-28" \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer $JWT_TOKEN" 
+```
+This will return a list of all the flights available for the date specified in the URL, filtered by origin and destination. The results are ordered by price from lowest to highest.
+This example is for flights from Johannesburg (JNB) to Atlanta (ATL) on April 28, 2025.
