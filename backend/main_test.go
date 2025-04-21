@@ -15,6 +15,10 @@ func setupRouter() *gin.Engine {
 	gin.SetMode(gin.TestMode)
 	r := gin.Default()
 
+	r.GET("/", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{"message": "Hello World!"})
+	})
+
 	r.POST("/login", LoginHandler)
 
 	protected := r.Group("/secret")
@@ -23,6 +27,43 @@ func setupRouter() *gin.Engine {
 		protected.GET("/", JWTAuthMiddleware())
 	}
 	return r
+}
+
+func TestHomePage(t *testing.T) {
+	router := setupRouter()
+
+	tests := []struct {
+		name           string
+		method         string
+		endpoint       string
+		expectedStatus int
+		expectedBody   map[string]string
+	}{
+		{
+			name:           "GET home page",
+			method:         "GET",
+			endpoint:       "/",
+			expectedStatus: http.StatusOK,
+			expectedBody:   map[string]string{"message": "Hello World!"},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			req, _ := http.NewRequest(tt.method, tt.endpoint, nil)
+			resp := httptest.NewRecorder()
+			router.ServeHTTP(resp, req)
+
+			assert.Equal(t, tt.expectedStatus, resp.Code)
+
+			if tt.expectedBody != nil {
+				var body map[string]string
+				err := json.Unmarshal(resp.Body.Bytes(), &body)
+				assert.NoError(t, err)
+				assert.Equal(t, tt.expectedBody["message"], body["message"])
+			}
+		})
+	}
 }
 
 func TestLogin(t *testing.T) {
