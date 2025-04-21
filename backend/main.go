@@ -77,5 +77,8 @@ func main() {
 	})
 	protected.GET("/flights", handlers.GetAllFromRedis)
 
-	r.Run(":8080")
+	err := r.Run(":8080")
+	if err != nil {
+		log.Fatalf("Error starting server: %v", err)
+	}
 }
