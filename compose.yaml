@@ -20,6 +20,10 @@ services:
     build: ./backend/
     container_name: backend
     restart: unless-stopped
+    develop:
+      watch:
+        - action: rebuild
+          path: ./backend/
     #We don't expose ports here because we are using caddy as a reverse proxy
   cache: 
     image: redis:latest
