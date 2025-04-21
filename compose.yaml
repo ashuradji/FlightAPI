@@ -16,6 +16,8 @@ services:
       - NET_ADMIN
     depends_on:
       - backend
+    networks:
+      - app_network
   backend:
     build: ./backend/
     container_name: backend
@@ -24,8 +26,20 @@ services:
       watch:
         - action: rebuild
           path: ./backend/
-    #We don't expose ports here because we are using caddy as a reverse proxy
-  cache: 
+    ports:
+      - "8080:8080" # This is internal only because Caddy will be exposing it to the outside world
+    networks:
+      - app_network
+    depends_on:
+      - redis
+  redis: 
     image: redis:latest
-    container_name: cache
+    container_name: redis
     restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - app_network
+
+networks:
+  app_network:
