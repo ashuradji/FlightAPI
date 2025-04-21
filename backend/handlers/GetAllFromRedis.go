@@ -14,8 +14,8 @@ import (
 
 var ctx = context.Background()
 
-func GetAllFromRedis(c *gin.Context) {
-	log.Println("Starting GetAllFromRedis")
+func GetAll(c *gin.Context) {
+	log.Println("Starting GetAll")
 
 	// Retrieve the Redis client from the Gin context
 	rdb, ok := c.MustGet("redisClient").(*redis.Client)

@@ -79,6 +79,7 @@ func main() {
 
 	// Route to fetch all flights from Redis
 	protected.GET("/flights", handlers.GetAllFromRedis)
+	protected.GET("/flights", handlers.GetAll)
 
 	err := r.Run(":8080")
 	if err != nil {
