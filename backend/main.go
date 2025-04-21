@@ -1,7 +1,7 @@
 package main
 
 import (
-	"FlightAPI/controllers"
+	"FlightAPI/handlers"
 	"context"
 	"github.com/gin-gonic/gin"
 	"github.com/redis/go-redis/v9"
@@ -75,7 +75,7 @@ func main() {
 		c.Set("redisClient", rdb)
 		c.Next()
 	})
-	protected.GET("/flights", controllers.GetAllFromRedis)
+	protected.GET("/flights", handlers.GetAllFromRedis)
 
 	r.Run(":8080")
 }
