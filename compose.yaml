@@ -21,3 +21,7 @@ services:
     container_name: backend
     restart: unless-stopped
     #We don't expose ports here because we are using caddy as a reverse proxy
+  cache: 
+    image: redis:latest
+    container_name: cache
+    restart: unless-stopped
