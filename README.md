@@ -58,3 +58,10 @@ Now you can use the token to access the secret endpoint. The server will verify 
 ```
 This will return a list of all the cached in the system.
 
+### Get all dates where there is flights available
+```bash
+    curl "http://localhost/api/dates" \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer $JWT_TOKEN" 
+``` 
+This will return a list of all the dates where there are flights available in the system. 
