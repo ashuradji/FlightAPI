@@ -1,11 +1,19 @@
 package main
 
 import (
+	"context"
 	"github.com/gin-gonic/gin"
+	"github.com/redis/go-redis/v9"
 	"net/http"
 )
 
 func main() {
+
+	ctx := context.Background()
+
+	rdb := redis.NewClient(&redis.Options{Addr: "redis:6379", Password: "", DB: 0})
+
+	go callMockyAPI(ctx, rdb)
 
 	r := gin.Default()
 
