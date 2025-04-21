@@ -14,6 +14,4 @@ services:
   backend:
     build: ./backend/
     container_name: backend
-    depends_on:
-      - caddy
     restart: unless-stopped
