@@ -76,6 +76,8 @@ func main() {
 		c.Set("redisClient", rdb)
 		c.Next()
 	})
+
+	// Route to fetch all flights from Redis
 	protected.GET("/flights", handlers.GetAllFromRedis)
 
 	err := r.Run(":8080")
