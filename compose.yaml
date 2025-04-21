@@ -1,5 +1,10 @@
 services:
   caddy:
+    # Why Caddy? Caddy is a powerful web server that can automatically obtain and renew SSL certificates, making it an excellent choice for serving web applications securely.
+    # It also has a simple configuration syntax and can act as a reverse proxy, which is useful for routing requests to different services.
+    # Right now we're using it to expose only 1 service so we would not need a reverse proxy, but in the future we might want to add multiple services like a frontend or another backend.
+    # Caddy will take care of the SSL certificates for us, so we don't have to worry about that.
+    # Caddy uses Let's Encrypt by default, which is a free certificate authority that provides SSL certificates for free but we can configure it to use other certificate authorities if we want to.
     image: caddy:latest
     container_name: caddy
     restart: unless-stopped
