@@ -1,6 +1,7 @@
 package main
 
 import (
+	"FlightAPI/controllers"
 	"context"
 	"github.com/gin-gonic/gin"
 	"github.com/redis/go-redis/v9"
@@ -64,6 +65,17 @@ func main() {
 			"message": "This is a secret message!",
 		})
 	})
+
+	protected := r.Group("/api")
+	// Middleware to check JWT token
+	protected.Use(JWTAuthMiddleware())
+
+	// Middleware to add redis client in to routegroup
+	protected.Use(func(c *gin.Context) {
+		c.Set("redisClient", rdb)
+		c.Next()
+	})
+	protected.GET("/flights", controllers.GetAllFromRedis)
 
 	r.Run(":8080")
 }
