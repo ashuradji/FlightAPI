@@ -106,7 +106,7 @@ func saveFlightByDate(ctx context.Context, rdb *redis.Client, flight models.Flig
 		return fmt.Errorf("invalid departure time: %w", err)
 	}
 	dateKey := t.Format("2006-01-02")
-	redisKey := fmt.Sprintf("flights:%s", dateKey)
+	redisKey := fmt.Sprintf("%s", dateKey)
 
 	// Convert to JSON
 	data, err := json.Marshal(flight)
