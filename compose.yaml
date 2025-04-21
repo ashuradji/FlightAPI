@@ -7,7 +7,7 @@ services:
       - "80:80"
     volumes:
         - ./Caddyfile:/etc/caddy/Caddyfile
-    cap_add:
+    cap_add: #This will allow caddy to use their service discovery and configuration to proxy to the backend
       - NET_ADMIN
     depends_on:
       - backend
@@ -15,3 +15,4 @@ services:
     build: ./backend/
     container_name: backend
     restart: unless-stopped
+    #We don't expose ports here because we are using caddy as a reverse proxy
