@@ -56,6 +56,7 @@ func main() {
 
 	r.POST("/login", LoginHandler)
 
+	// Test JWT authentication
 	secret := r.Group("/secret")
 	secret.Use(JWTAuthMiddleware())
 	secret.GET("/", func(c *gin.Context) {
