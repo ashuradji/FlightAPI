@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-func callMockyAPI(ctx context.Context, rdb *redis.Client) {
+func callMockyAPI(ctx context.Context, rdb *redis.Client) error {
 	// Mocky API URL: This shouldn't be hardcoded in production code
 	url := "https://run.mocky.io/v3/60991ebd-1a38-4b8c-9e29-6466adb66fc6"
 
@@ -77,6 +77,8 @@ func callMockyAPI(ctx context.Context, rdb *redis.Client) {
 			break
 		}
 	}
+
+	return nil
 }
 
 func saveFlightByDate(ctx context.Context, rdb *redis.Client, flight models.Flight) error {
