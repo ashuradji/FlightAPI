@@ -1,4 +1,4 @@
-package main
+package crawlers
 
 import (
 	"FlightAPI/models"
@@ -14,7 +14,7 @@ import (
 // callMockyAPI fetches data from the Mocky API and saves it to Redis.
 // It uses a context to manage the request lifecycle and a Redis client to store the data.
 // If the request takes too long, it will be canceled.
-func callMockyAPI(ctx context.Context, rdb *redis.Client) error {
+func CallMockyAPI(ctx context.Context, rdb *redis.Client) error {
 	// Mocky API URL: This shouldn't be hardcoded in production code
 	// We're using http instead of https because our testing TSL certificates are self-signed.
 	//

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"FlightAPI/crawlers"
 	"FlightAPI/handlers"
 	"context"
 	"github.com/gin-gonic/gin"
@@ -28,7 +29,7 @@ func main() {
 
 	go func() {
 		// Trigger the first API call immediately
-		err := callMockyAPI(timeoutCtx, rdb)
+		err := crawlers.CallMockyAPI(timeoutCtx, rdb)
 		if err != nil {
 			log.Printf("Error calling Mocky API on start: %v", err)
 		}
@@ -36,7 +37,7 @@ func main() {
 		for {
 			select {
 			case <-ticker.C:
-				err := callMockyAPI(timeoutCtx, rdb)
+				err := crawlers.CallMockyAPI(timeoutCtx, rdb)
 				if err != nil {
 					log.Printf("Error calling Mocky API: %v", err)
 				}
