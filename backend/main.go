@@ -26,6 +26,12 @@ func main() {
 	defer ticker.Stop()
 
 	go func() {
+		// Trigger the first API call immediately
+		err := callMockyAPI(timeoutCtx, rdb)
+		if err != nil {
+			log.Printf("Error calling Mocky API on start: %v", err)
+		}
+
 		for {
 			select {
 			case <-ticker.C:
