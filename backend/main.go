@@ -15,5 +15,15 @@ func main() {
 		})
 	})
 
-	r.Run(":80")
+	r.POST("/login", LoginHandler)
+
+	secret := r.Group("/secret")
+	secret.Use(JWTAuthMiddleware())
+	secret.GET("/", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "This is a secret message!",
+		})
+	})
+
+	r.Run(":8080")
 }
