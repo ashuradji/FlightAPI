@@ -9,3 +9,9 @@ services:
         - ./Caddyfile:/etc/caddy/Caddyfile
     cap_add:
       - NET_ADMIN
+  backend:
+    build: ./backend/
+    container_name: backend
+    depends_on:
+      - caddy
+    restart: unless-stopped
