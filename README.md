@@ -29,7 +29,7 @@ In this script you query the `/login` endpoint with the username and password of
 ### JWT Auth Rematch
 
 ```bash
-   curl -X GET http://localhost/secret \
+   curl -X GET http://localhost/secret/ \
     -H "Authorization: Bearer $JWT_TOKEN"
 ```
 
