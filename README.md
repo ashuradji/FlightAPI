@@ -5,6 +5,21 @@
 - Docker
 - Make (This comes installed with most Linux distributions and macOS versions)
 
+## Getting Started
+
+1. Clone the repository:
+```bash
+    git clone https://github.com/ashuradji/FlightAPI && cd FlightAPI
+```
+2. Start the server
+```bash
+    make start
+```
+3. To stop the server, you can use:
+```bash
+    make stop
+```
+
 ## Walkthrough:
 ### JWT Auth
 This app has JWT authentication. You can use the token obtained from the login endpoint to access protected routes. For example, to get a secret message, you can use the following command:
@@ -41,5 +56,5 @@ Now you can use the token to access the secret endpoint. The server will verify 
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer $JWT_TOKEN"
 ```
-This will return a list of all the cached flights in the system.
+This will return a list of all the cached in the system.
 
