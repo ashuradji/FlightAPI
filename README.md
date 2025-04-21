@@ -35,3 +35,11 @@ In this script you query the `/login` endpoint with the username and password of
 
 Now you can use the token to access the secret endpoint. The server will verify the token and return the secret message if the token is valid.
 
+### Get all flights
+```bash
+    curl "http://localhost/api/flights" \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer $JWT_TOKEN"
+```
+This will return a list of all the cached flights in the system.
+
