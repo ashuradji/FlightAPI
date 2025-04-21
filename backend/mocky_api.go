@@ -16,7 +16,9 @@ import (
 // If the request takes too long, it will be canceled.
 func callMockyAPI(ctx context.Context, rdb *redis.Client) error {
 	// Mocky API URL: This shouldn't be hardcoded in production code
-	url := "https://run.mocky.io/v3/60991ebd-1a38-4b8c-9e29-6466adb66fc6"
+	// We're using http instead of https because our testing TSL certificates are self-signed.
+	//
+	url := "http://run.mocky.io/v3/60991ebd-1a38-4b8c-9e29-6466adb66fc6"
 
 	// Create a new HTTP client
 	client := &http.Client{}
